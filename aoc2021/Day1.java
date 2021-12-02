@@ -3,15 +3,9 @@ package aoc2021;
 import java.io.*;
 import java.util.*;
 
-public class Day1 {
-	public static void main(String[] args) throws FileNotFoundException {
-		System.out.println("Part 1 solution: " + solve(true, 1));
-		System.out.println("Part 2 solution: " + solve(false, 1));
-	}
+public class Day1 implements DayTemplate{
 	
-	public static int solve(boolean part1, int day) throws FileNotFoundException {
-		File file = new File("./aoc2021/day" + day + ".txt");
-		Scanner in = new Scanner(file);
+	public String solve(boolean part1, Scanner in) throws FileNotFoundException {
 		int answer = 0;
 		int offset = part1?1:3; // a+b+c < b+c+d iff a <d
 		List<Integer> nums = new ArrayList<>();
@@ -24,6 +18,6 @@ public class Day1 {
 			}
 		}
 		in.close();
-		return answer;
+		return "" + answer;
 	}
 }
