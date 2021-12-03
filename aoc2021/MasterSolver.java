@@ -6,7 +6,7 @@ import java.util.Scanner;
 
 public class MasterSolver {
 	public static void main(String[] args) throws Exception {
-		int day = 1;
+		int day = 3;
 		boolean part1 = true;
 		File file = new File("./aoc2021/day" + day + ".txt");
 		Scanner in = new Scanner(file);

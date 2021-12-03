@@ -6,10 +6,9 @@ import java.util.*;
 public class Day2 implements DayTemplate{
 	
 	public String solve(boolean part1, Scanner in) throws FileNotFoundException {
-		int depth1 = 0;
-		int depth2 = 0;
+		int depth = 0;
 		int forward = 0;
-		int aim = 0;
+		int aim = 0; // aim is depth for part 1
 		List<String> strs = new ArrayList<>();
 		while(in.hasNext()) {
 			strs.add(in.nextLine());
@@ -18,18 +17,15 @@ public class Day2 implements DayTemplate{
 			int amount = Integer.parseInt(str.split(" ")[1]);
 			if(str.contains("forward")) {
 				forward+= amount;
-				depth2 += amount * aim;
+				depth += amount * aim;
 			}
 			if(str.contains("up")) {
-				depth1-= amount;
 				aim-= amount;
 			}
 			if(str.contains("down")) {
-				depth1+= amount;
 				aim+= amount;
 			}
 		}
-		in.close();
-		return "" + (part1?depth1:depth2) * forward;
+		return "" + (part1?aim:depth) * forward;
 	}
 }

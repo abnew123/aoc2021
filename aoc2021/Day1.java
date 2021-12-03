@@ -17,7 +17,6 @@ public class Day1 implements DayTemplate{
 				answer+=1;
 			}
 		}
-		in.close();
 		return "" + answer;
 	}
 }
