@@ -33,26 +33,22 @@ public class Day3{
 		return "" + Integer.parseInt(gamma,2) * Integer.parseInt(epsilon,2);
 	}
 	
+	public static String helper_golfed(List<String> n, String p, boolean m) {
+		final String f=p;
+		n = n.stream().filter(v->v.startsWith(f)).toList();
+		if(n.size()==1)
+			return n.get(0);
+		return helper(n,p+(n.stream().mapToInt(s -> s.charAt(f.length())=='1'?1:-1).sum()>=0^m?"0":"1"),m);
+	}
+	
 	public static String helper(List<String> nums, String prefix, boolean most) {
-		int differential = 0;
-		for(int i = nums.size() - 1; i>=0;i--) {
-			if(!nums.get(i).startsWith(prefix)) {
-				nums.remove(i);
-			}
-		}
+		final String prefix_final = prefix;
+		nums = nums.stream().filter(val -> val.startsWith(prefix_final)).toList();
 		if(nums.size() == 1) {
 			return nums.get(0);
 		}
-		for(String num: nums) {
-			differential += num.charAt(prefix.length()) == '1'?1:-1;
-		}
-		if(differential >= 0) {
-			prefix += most? "1":"0";
-		}
-		else {
-			prefix+=most?"0":"1";
-		}
+		boolean more_ones = nums.stream().mapToInt(num -> num.charAt(prefix_final.length()) == '1'?1:-1).sum() >= 0;
+		prefix += more_ones ^ most?"0":"1";
 		return helper(nums,prefix, most);
-		
 	}
 }
