@@ -5,15 +5,7 @@ import java.util.*;
 
 public class Day4{
 	
-	public static void main(String[] args) throws FileNotFoundException {
-		int day = 4;
-		boolean part1 = false;
-		File file = new File("./aoc2021/day" + day + ".txt");
-		Scanner in = new Scanner(file);
-		System.out.println(solve(part1, in));
-	}
-	
-	public static String solve(boolean part1, Scanner in) throws FileNotFoundException {
+	public String solve(boolean part1, Scanner in) throws FileNotFoundException {
 		String[] initial_numbers = in.nextLine().split(",");
 		List<String> inps = new ArrayList<>();
 		int answer = 0; 
