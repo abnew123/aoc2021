@@ -3,18 +3,9 @@ package aoc2021;
 import java.io.*;
 import java.util.*;
 
-public class Day5{
+public class Day5 implements DayTemplate{
 	
-	public static void main(String[] args) throws FileNotFoundException {
-		int day = 5;
-		boolean part1 = true;
-		File file = new File("./aoc2021/day" + day + ".txt");
-		Scanner in = new Scanner(file);
-		System.out.println(solve(part1, in));
-	}
-	
-	public static String solve(boolean part1, Scanner in) throws FileNotFoundException {
-		int answer = 0; 
+	public String solve(boolean part1, Scanner in) throws FileNotFoundException {
 		int[][] grid = new int[2000][2000];
 		List<Line> lines = new ArrayList<>();
 		while(in.hasNext()) {
@@ -26,17 +17,9 @@ public class Day5{
 				line.addPoints(grid);
 			}
 		}
-		for(int i = 0; i < grid.length; i++) {
-			for(int j = 0; j < grid.length; j++) {
-				if(grid[i][j] >= 2) {
-					answer ++;
-				}
-			}
-		}
-		return "" + answer;
+		return "" + Arrays.stream(grid).flatMapToInt(x -> Arrays.stream(x)).filter(x-> x>=2).count();
 	}
 }
-
 
 class Line{
 	private int x1;
@@ -54,33 +37,23 @@ class Line{
 	public boolean isHoriz() {
 		return x1 == x2;
 	}
+	
 	public boolean isVert() {
 		return y1 == y2;
 	}
 	
 	public void addPoints(int[][] grid) {
-		if(isHoriz()) {
+		int deltax =x1-x2;
+		int deltay =y1-y2;
+		if(deltax == 0) {
 			for(int i = Math.min(y1, y2); i <= Math.max(y1, y2); i++) {
-				grid[x1][i] +=1;
+				grid[x1][i]++;
 			}
 		}
 		else {
-			if(isVert()) {
-				for(int i = Math.min(x1, x2); i <= Math.max(x1, x2); i++) {
-					grid[i][y1] +=1;
-				}
-			}
-			else {
-				if((x1 > x2 && y1 > y2)||(x1 < x2 && y1 < y2)){
-					for(int i = 0; i <= Math.max(x1, x2) - Math.min(x1, x2); i++) {
-						grid[Math.min(x1, x2) + i][Math.min(y1, y2) + i] +=1;
-					}
-				}
-				else {
-					for(int i = 0; i <= Math.max(x1, x2) - Math.min(x1, x2); i++) {
-						grid[Math.min(x1, x2) + i][Math.max(y1, y2) - i] +=1;
-					}
-				}
+			int slope = (deltay*deltax)>0?1:(deltay*deltax)<0?-1:0;
+			for(int i = 0; i <= Math.abs(deltax); i++) {
+				grid[Math.min(x1, x2) + i][((slope <0)?Math.max(y1, y2):Math.min(y1, y2)) + (i * slope)]++;
 			}
 		}
 	}
