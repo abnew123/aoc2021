@@ -3,7 +3,7 @@ package aoc2021;
 import java.io.*;
 import java.util.*;
 
-public class Day4{
+public class Day4 implements DayTemplate{
 	
 	public String solve(boolean part1, Scanner in) throws FileNotFoundException {
 		String[] initial_numbers = in.nextLine().split(",");
