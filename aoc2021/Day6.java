@@ -2,13 +2,13 @@ package aoc2021;
 
 import java.io.*;
 import java.util.*;
-import java.util.stream.IntStream;
+import java.util.stream.LongStream;
 
 public class Day6 implements DayTemplate{
 	
 	public String solve(boolean part1, Scanner in) throws FileNotFoundException {
-		List<Integer> input = Arrays.asList(in.nextLine().split(",")).stream().map(i -> Integer.parseInt(i)).toList();
-		long[] ages = IntStream.range(0, 9).map(index -> Collections.frequency(input, index)).asLongStream().toArray();
+		List<String> input = Arrays.asList(in.nextLine().split(","));
+		long[] ages = LongStream.range(0, 9).map(index -> Collections.frequency(input, ""+index)).toArray();
 		for(int i = 0; i < (part1?80:256); i++) {
 			ages = helper(ages);
 		}
