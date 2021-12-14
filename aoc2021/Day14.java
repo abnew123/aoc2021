@@ -26,10 +26,8 @@ public class Day14 {
 		long min = (long)1000 * 1000 * 1000 * 1000 * 100;
 		Map<String, Long> map = new HashMap<>();
 		for(String key: vals.keySet()) {
-			map.putIfAbsent(key.substring(0,1), (long)0);
-			map.putIfAbsent(key.substring(1,2), (long)0);
-			map.put(key.substring(0,1), map.get(key.substring(0,1)) + vals.get(key));
-			map.put(key.substring(1,2), map.get(key.substring(1,2)) + vals.get(key));
+			map.merge(key.substring(0,1), vals.get(key), (a,b) -> a+b);
+			map.merge(key.substring(1,2), vals.get(key), (a,b) -> a+b);
 		}
 		for(String key: map.keySet()) {
 			max = Math.max(map.get(key),max);
@@ -42,10 +40,8 @@ public class Day14 {
 		Map<String, Long> newVals = new HashMap<>();
 		for(String key: vals.keySet()) {
 			String[] pats = book.apply(key);
-			newVals.putIfAbsent(pats[0], (long)0);
-			newVals.putIfAbsent(pats[1], (long)0);
-			newVals.put(pats[0], newVals.get(pats[0]) + vals.get(key));
-			newVals.put(pats[1], newVals.get(pats[1]) + vals.get(key));
+			newVals.merge(pats[0], vals.get(key), (a,b) -> a+b);
+			newVals.merge(pats[1], vals.get(key), (a,b) -> a+b);
 		}
 		return newVals;
 	}
